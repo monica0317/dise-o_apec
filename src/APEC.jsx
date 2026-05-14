@@ -59,7 +59,7 @@ const MOCK_USER = {
   role: "Docente",
   dept: "Facultad de Ingeniería",
   avatar: "CP",
-  programa: "Ingeniería de Sistemas",
+  programa: "Ingeniería Informatica",
 };
 
 const MOCK_ASIGNATURAS = [
@@ -71,12 +71,12 @@ const MOCK_ASIGNATURAS = [
 ];
 
 const MOCK_DOCENTES = [
-  { id: 1, nombre: "Dr. Carlos Andrés Pérez Rodríguez", email: "caperez@uao.edu.co", dept: "Ing. de Sistemas", tipo: "Tiempo Completo", materias: 2, rol: "Docente", avatar: "CP", estado: "Activo" },
-  { id: 2, nombre: "Dra. María Isabel López Vargas", email: "milopez@uao.edu.co", dept: "Ing. de Sistemas", tipo: "Tiempo Completo", materias: 3, rol: "Docente", avatar: "ML", estado: "Activo" },
-  { id: 3, nombre: "Dr. Jorge Eduardo Martínez Ríos", email: "jemartinez@uao.edu.co", dept: "Ing. de Sistemas", tipo: "Catedrático", materias: 1, rol: "Docente", avatar: "JM", estado: "Activo" },
-  { id: 4, nombre: "Dra. Ana Lucía Gómez Torres", email: "algomez@uao.edu.co", dept: "Ing. de Sistemas", tipo: "Tiempo Completo", materias: 2, rol: "Coordinadora ABET", avatar: "AG", estado: "Activo" },
-  { id: 5, nombre: "Ing. Roberto Castillo Mejía", email: "rcastillo@uao.edu.co", dept: "Ing. de Sistemas", tipo: "Catedrático", materias: 1, rol: "Docente", avatar: "RC", estado: "Activo" },
-  { id: 6, nombre: "Dr. Felipe Salcedo Pinto", email: "fsalcedo@uao.edu.co", dept: "Ing. de Sistemas", tipo: "Tiempo Completo", materias: 2, rol: "Director", avatar: "FS", estado: "Activo" },
+  { id: 1, nombre: "Dr. Carlos Andrés Pérez Rodríguez", email: "caperez@uao.edu.co", dept: "Ing. Informatica", tipo: "Tiempo Completo", materias: 2, rol: "Docente", avatar: "CP", estado: "Activo" },
+  { id: 2, nombre: "Dra. María Isabel López Vargas", email: "milopez@uao.edu.co", dept: "Ing. Informatica", tipo: "Tiempo Completo", materias: 3, rol: "Docente", avatar: "ML", estado: "Activo" },
+  { id: 3, nombre: "Dr. Jorge Eduardo Martínez Ríos", email: "jemartinez@uao.edu.co", dept: "Ing. Informatica", tipo: "Catedrático", materias: 1, rol: "Docente", avatar: "JM", estado: "Activo" },
+  { id: 4, nombre: "Dra. Ana Lucía Gómez Torres", email: "algomez@uao.edu.co", dept: "Ing. Informatica", tipo: "Tiempo Completo", materias: 2, rol: "Coordinadora ABET", avatar: "AG", estado: "Activo" },
+  { id: 5, nombre: "Ing. Roberto Castillo Mejía", email: "rcastillo@uao.edu.co", dept: "Ing. Informatica", tipo: "Catedrático", materias: 1, rol: "Docente", avatar: "RC", estado: "Activo" },
+  { id: 6, nombre: "Dr. Felipe Salcedo Pinto", email: "fsalcedo@uao.edu.co", dept: "Ing. Informatica", tipo: "Tiempo Completo", materias: 2, rol: "Director", avatar: "FS", estado: "Activo" },
 ];
 
 const MOCK_ESTUDIANTES = [
@@ -100,7 +100,7 @@ const MOCK_PROYECTOS = [
 
 const STUDENT_OUTCOMES = [
   { id: "SO1", label: "Análisis de Problemas de Ingeniería", desc: "Identificar, formular y resolver problemas complejos de ingeniería aplicando principios de ciencias, matemáticas y ciencias de la ingeniería", cumplimiento: 87, meta: 85, nivel: "Alto" },
-  { id: "SO2", label: "Diseño de Sistemas", desc: "Diseñar soluciones para satisfacer necesidades especificadas con consideración de salud pública, seguridad y bienestar, así como factores globales, culturales, sociales, ambientales y económicos", cumplimiento: 82, meta: 80, nivel: "Alto" },
+  { id: "SO2", label: "Diseño", desc: "Diseñar soluciones para satisfacer necesidades especificadas con consideración de salud pública, seguridad y bienestar, así como factores globales, culturales, sociales, ambientales y económicos", cumplimiento: 82, meta: 80, nivel: "Alto" },
   { id: "SO3", label: "Comunicación Efectiva", desc: "Comunicarse efectivamente con diversas audiencias", cumplimiento: 79, meta: 80, nivel: "Medio" },
   { id: "SO4", label: "Ética Profesional", desc: "Reconocer las responsabilidades éticas y profesionales en situaciones de ingeniería y hacer juicios informados que deben considerar el impacto de las soluciones de ingeniería en contextos globales, económicos, ambientales y sociales", cumplimiento: 91, meta: 85, nivel: "Alto" },
   { id: "SO5", label: "Trabajo en Equipo", desc: "Funcionar efectivamente como miembro o líder de un equipo cuyos miembros en conjunto proveen liderazgo, crean un ambiente colaborativo e inclusivo, establecen metas, planifican tareas y cumplen objetivos", cumplimiento: 88, meta: 85, nivel: "Alto" },
@@ -352,7 +352,6 @@ function DonutChart({ data, size = 120 }) {
 const NAV = [
   { key: "dashboard", label: "Dashboard", icon: LayoutDashboard },
   { key: "asignaturas", label: "Asignaturas", icon: BookOpen },
-  { key: "docentes", label: "Docentes", icon: GraduationCap },
   { key: "estudiantes", label: "Estudiantes", icon: Users },
   { key: "proyectos", label: "Proyectos", icon: FolderKanban },
   { key: "rubricas", label: "Rúbricas ABET", icon: ClipboardList },
@@ -545,74 +544,500 @@ function Navbar({ onToggleSidebar, page, addToast }) {
 // ─── PAGE: LOGIN ─────────────────────────────────────────────────────────────
 function LoginPage({ onLogin }) {
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+
   const handleLogin = () => {
     setLoading(true);
-    setTimeout(() => { setLoading(false); onLogin(); }, 1800);
+
+    setTimeout(() => {
+      setLoading(false);
+      onLogin();
+    }, 1800);
   };
+
   return (
-    <div style={{
-      minHeight: "100vh", background: `linear-gradient(135deg, ${UAO.grayDarkest} 0%, #2d1515 50%, ${UAO.redDark} 100%)`,
-      display: "flex", alignItems: "center", justifyContent: "center", padding: 20,
-    }}>
-      <div style={{ position: "absolute", inset: 0, overflow: "hidden", pointerEvents: "none" }}>
-        {[...Array(12)].map((_, i) => (
-          <div key={i} style={{
-            position: "absolute", borderRadius: "50%",
-            width: Math.random() * 200 + 60, height: Math.random() * 200 + 60,
-            background: `rgba(200,16,46,${Math.random() * 0.06 + 0.02})`,
-            top: `${Math.random() * 100}%`, left: `${Math.random() * 100}%`,
-            animation: `float ${Math.random() * 8 + 10}s ease-in-out infinite`,
-            animationDelay: `${Math.random() * 5}s`,
-          }} />
-        ))}
-      </div>
-      <div style={{
-        background: "#fff", borderRadius: 20, padding: "48px 44px", width: "100%", maxWidth: 420,
-        boxShadow: "0 30px 80px rgba(0,0,0,0.35)", position: "relative", zIndex: 1,
-      }}>
-        <div style={{ textAlign: "center", marginBottom: 32 }}>
-          <div style={{
-            width: 64, height: 64, borderRadius: 16, background: UAO.red,
-            display: "flex", alignItems: "center", justifyContent: "center",
-            margin: "0 auto 16px", fontSize: 28, fontWeight: 900, color: "#fff",
-            boxShadow: `0 8px 24px ${UAO.red}55`,
-          }}>A</div>
-          <h1 style={{ margin: "0 0 4px", fontSize: 26, fontWeight: 900, color: UAO.grayDarkest }}>APEC</h1>
-          <p style={{ margin: 0, fontSize: 13, color: UAO.grayText }}>Aplicación Portable para Evaluación por Criterios</p>
-          <div style={{ marginTop: 6 }}>
-            <Badge color={UAO.redDark} bg={UAO.redLight}>Universidad Autónoma de Occidente</Badge>
+    <div
+      style={{
+        minHeight: "100vh",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        padding: 24,
+        background: `
+          radial-gradient(circle at top left, rgba(200,16,46,.18), transparent 25%),
+          radial-gradient(circle at bottom right, rgba(200,16,46,.12), transparent 20%),
+          linear-gradient(135deg, #0f1115 0%, #1c1f26 45%, #2b0f16 100%)
+        `,
+        overflow: "hidden",
+        position: "relative",
+      }}
+    >
+      {/* Background blur circles */}
+      <div
+        style={{
+          position: "absolute",
+          width: 420,
+          height: 420,
+          borderRadius: "50%",
+          background: "rgba(200,16,46,.15)",
+          filter: "blur(100px)",
+          top: -120,
+          left: -100,
+        }}
+      />
+
+      <div
+        style={{
+          position: "absolute",
+          width: 340,
+          height: 340,
+          borderRadius: "50%",
+          background: "rgba(255,255,255,.05)",
+          filter: "blur(90px)",
+          bottom: -120,
+          right: -80,
+        }}
+      />
+
+      {/* LOGIN CARD */}
+      <div
+        style={{
+          width: "100%",
+          maxWidth: 980,
+          minHeight: 580,
+          background: "rgba(255,255,255,.96)",
+          borderRadius: 28,
+          overflow: "hidden",
+          display: "grid",
+          gridTemplateColumns: "1fr 1fr",
+          boxShadow: "0 30px 90px rgba(0,0,0,.35)",
+          position: "relative",
+          zIndex: 2,
+        }}
+      >
+        {/* LEFT PANEL */}
+        <div
+          style={{
+            background: `linear-gradient(180deg, ${UAO.red} 0%, ${UAO.redDark} 100%)`,
+            position: "relative",
+            padding: "60px 50px",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "space-between",
+            color: "#fff",
+            overflow: "hidden",
+          }}
+        >
+        {/* Decorative shapes */}
+<div
+  style={{
+    position: "absolute",
+    top: -80,
+    right: -80,
+    width: 220,
+    height: 220,
+    borderRadius: "50%",
+    background: "rgba(255,255,255,.08)",
+  }}
+/>
+
+<div
+  style={{
+    position: "absolute",
+    bottom: -120,
+    left: -80,
+    width: 260,
+    height: 260,
+    transform: "rotate(45deg)",
+    background: "rgba(0,0,0,.12)",
+  }}
+/>
+
+{/* Welcome Content */}
+<div
+  style={{
+    position: "relative",
+    zIndex: 2,
+    textAlign: "center",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    marginTop: 10,
+  }}
+>
+  <p
+    style={{
+      margin: 0,
+      fontSize: 15,
+      opacity: 0.9,
+      letterSpacing: 0.5,
+      fontWeight: 500,
+    }}
+  >
+    Plataforma institucional
+  </p>
+
+    {/* Logo */}
+<div
+  style={{
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    position: "relative",
+    zIndex: 2,
+    marginTop: 10,
+    marginBottom: -30,
+  }}
+>
+  <div
+    style={{
+      width: 340,
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      position: "relative",
+    }}
+  >
+    {/* Glow */}
+    <div
+      style={{
+        position: "absolute",
+        width: 240,
+        height: 240,
+        borderRadius: "50%",
+        background: "rgba(255,255,255,.10)",
+        filter: "blur(35px)",
+      }}
+    />
+
+    <img
+      src="/logo-apec.png"
+      alt="APEC Logo"
+      style={{
+        width: "100%",
+        maxWidth: 300,
+        objectFit: "contain",
+        position: "relative",
+        zIndex: 2,
+        filter: "drop-shadow(0 14px 30px rgba(0,0,0,.35))",
+      }}
+    />
+  </div>
+</div>
+
+
+  <p
+    style={{
+      marginTop: 22,
+      fontSize: 15,
+      lineHeight: 1.8,
+      maxWidth: 420,
+      opacity: 0.9,
+      textAlign: "center",
+    }}
+  >
+    Sistema de evaluación académica orientado al seguimiento de
+    criterios ABET y Student Outcomes para el programa de Ingeniería
+    Informática.
+  </p>
+</div>
+
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              fontSize: 12,
+              opacity: 0.85,
+              position: "relative",
+              zIndex: 2,
+            }}
+          >
+            <span>Universidad Autónoma de Occidente</span>
+            <span>v2.1.0</span>
           </div>
         </div>
-        <div style={{ background: UAO.grayLight, borderRadius: 12, padding: "14px 16px", marginBottom: 24, fontSize: 13, color: UAO.grayDark, lineHeight: 1.5, border: `1px solid ${UAO.grayMed}` }}>
-          <strong style={{ color: UAO.red }}>Acceso institucional</strong> mediante Microsoft 365.<br />
-          Ingrese con sus credenciales UAO para continuar.
-        </div>
-        <button onClick={handleLogin} disabled={loading} style={{
-          width: "100%", padding: "14px 20px", borderRadius: 10, border: "none",
-          background: loading ? UAO.grayMed : "#2F2F2F", color: "#fff",
-          fontWeight: 700, fontSize: 15, cursor: loading ? "not-allowed" : "pointer",
-          display: "flex", alignItems: "center", justifyContent: "center", gap: 10,
-          transition: "all .2s", fontFamily: "inherit",
-        }}>
-          <span style={{ fontSize: 18 }}>⊞</span>
-          {loading ? "Autenticando con Microsoft..." : "Iniciar sesión con Microsoft 365"}
-        </button>
-        {loading && (
-          <div style={{ marginTop: 16 }}>
-            <div style={{ height: 4, background: UAO.grayMed, borderRadius: 99, overflow: "hidden" }}>
-              <div style={{ height: "100%", background: UAO.red, borderRadius: 99, animation: "progress 1.8s ease forwards" }} />
+
+        {/* RIGHT PANEL */}
+        <div
+          style={{
+            padding: "60px 55px",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            background: "#fff",
+          }}
+        >
+          <div style={{ maxWidth: 390, width: "100%", margin: "0 auto" }}>
+            <div style={{ marginBottom: 34 }}>
+              <h2
+                style={{
+                  margin: 0,
+                  fontSize: 34,
+                  fontWeight: 900,
+                  color: UAO.grayDarkest,
+                }}
+              >
+                Iniciar Sesión
+              </h2>
+
+              <p
+                style={{
+                  marginTop: 10,
+                  fontSize: 14,
+                  color: UAO.grayText,
+                  lineHeight: 1.6,
+                }}
+              >
+                Ingrese con su cuenta institucional para acceder a la
+                plataforma APEC.
+              </p>
             </div>
-            <p style={{ textAlign: "center", fontSize: 12, color: UAO.grayText, marginTop: 8 }}>Verificando identidad institucional...</p>
+
+            {/* Email */}
+            <div style={{ marginBottom: 18 }}>
+              <label
+                style={{
+                  display: "block",
+                  marginBottom: 8,
+                  fontSize: 13,
+                  fontWeight: 700,
+                  color: UAO.grayDark,
+                }}
+              >
+                Correo institucional
+              </label>
+
+              <input
+                type="email"
+                placeholder="usuario@uao.edu.co"
+                style={{
+                  width: "100%",
+                  padding: "14px 16px",
+                  borderRadius: 12,
+                  border: `1px solid ${UAO.grayBorder}`,
+                  fontSize: 14,
+                  outline: "none",
+                  transition: ".2s",
+                  fontFamily: "inherit",
+                  boxSizing: "border-box",
+                }}
+              />
+            </div>
+
+            {/* Password */}
+            <div style={{ marginBottom: 14 }}>
+              <label
+                style={{
+                  display: "block",
+                  marginBottom: 8,
+                  fontSize: 13,
+                  fontWeight: 700,
+                  color: UAO.grayDark,
+                }}
+              >
+                Contraseña
+              </label>
+
+              <div style={{ position: "relative" }}>
+                <input
+                  type={showPassword ? "text" : "password"}
+                  placeholder="Ingrese su contraseña"
+                  style={{
+                    width: "100%",
+                    padding: "14px 46px 14px 16px",
+                    borderRadius: 12,
+                    border: `1px solid ${UAO.grayBorder}`,
+                    fontSize: 14,
+                    outline: "none",
+                    transition: ".2s",
+                    fontFamily: "inherit",
+                    boxSizing: "border-box",
+                  }}
+                />
+
+                <button
+                  onClick={() => setShowPassword(!showPassword)}
+                  style={{
+                    position: "absolute",
+                    top: "50%",
+                    right: 14,
+                    transform: "translateY(-50%)",
+                    border: "none",
+                    background: "transparent",
+                    cursor: "pointer",
+                    color: UAO.grayText,
+                    fontSize: 14,
+                  }}
+                >
+                  {showPassword ? "🙈" : "👁️"}
+                </button>
+              </div>
+            </div>
+
+            {/* Remember */}
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                marginBottom: 28,
+              }}
+            >
+              <label
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 8,
+                  fontSize: 13,
+                  color: UAO.grayDark,
+                  cursor: "pointer",
+                }}
+              >
+                <input type="checkbox" />
+                Recordarme
+              </label>
+
+              <button
+                style={{
+                  background: "none",
+                  border: "none",
+                  color: UAO.red,
+                  fontSize: 13,
+                  fontWeight: 700,
+                  cursor: "pointer",
+                }}
+              >
+                ¿Olvidó su contraseña?
+              </button>
+            </div>
+
+            {/* Login button */}
+            <button
+              onClick={handleLogin}
+              disabled={loading}
+              style={{
+                width: "100%",
+                padding: "15px 20px",
+                borderRadius: 14,
+                border: "none",
+                background: loading
+                  ? "#c7c7c7"
+                  : `linear-gradient(135deg, ${UAO.red}, ${UAO.redDark})`,
+                color: "#fff",
+                fontWeight: 800,
+                fontSize: 15,
+                cursor: loading ? "not-allowed" : "pointer",
+                transition: ".25s",
+                boxShadow: loading
+                  ? "none"
+                  : `0 10px 25px ${UAO.red}40`,
+                fontFamily: "inherit",
+              }}
+            >
+              {loading
+                ? "Autenticando..."
+                : "Ingresar a la plataforma"}
+            </button>
+
+            {/* Loading */}
+            {loading && (
+              <div style={{ marginTop: 18 }}>
+                <div
+                  style={{
+                    height: 5,
+                    background: "#ececec",
+                    borderRadius: 99,
+                    overflow: "hidden",
+                  }}
+                >
+                  <div
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                      background: `linear-gradient(90deg, ${UAO.red}, ${UAO.redDark})`,
+                      borderRadius: 99,
+                      animation: "progress 1.8s ease forwards",
+                    }}
+                  />
+                </div>
+
+                <p
+                  style={{
+                    marginTop: 10,
+                    textAlign: "center",
+                    fontSize: 12,
+                    color: UAO.grayText,
+                  }}
+                >
+                  Verificando credenciales institucionales...
+                </p>
+              </div>
+            )}
+
+            {/* Divider */}
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: 12,
+                margin: "28px 0",
+              }}
+            >
+              <div
+                style={{
+                  flex: 1,
+                  height: 1,
+                  background: UAO.grayMed,
+                }}
+              />
+
+              <span
+                style={{
+                  fontSize: 12,
+                  color: UAO.grayText,
+                }}
+              >
+                acceso seguro
+              </span>
+
+              <div
+                style={{
+                  flex: 1,
+                  height: 1,
+                  background: UAO.grayMed,
+                }}
+              />
+            </div>
+
+            {/* Footer info */}
+            <div
+              style={{
+                background: "#fafafa",
+                border: `1px solid ${UAO.grayMed}`,
+                borderRadius: 14,
+                padding: "16px 18px",
+              }}
+            >
+              <p
+                style={{
+                  margin: 0,
+                  fontSize: 12,
+                  color: UAO.grayText,
+                  lineHeight: 1.7,
+                }}
+              >
+                Al iniciar sesión, acepta las políticas institucionales de uso
+                de la plataforma APEC y el tratamiento de datos académicos de
+                la Universidad Autónoma de Occidente.
+              </p>
+            </div>
           </div>
-        )}
-        <p style={{ textAlign: "center", fontSize: 11, color: UAO.grayText, marginTop: 24, lineHeight: 1.6 }}>
-          Al iniciar sesión, acepta los términos de uso de la plataforma APEC y la política de tratamiento de datos de la UAO · v2.1.0
-        </p>
+        </div>
       </div>
     </div>
   );
 }
-
 // ─── PAGE: DASHBOARD ─────────────────────────────────────────────────────────
 function DashboardPage({ addToast }) {
   const [loading, setLoading] = useState(true);
@@ -631,7 +1056,7 @@ function DashboardPage({ addToast }) {
       <div style={{ background: `linear-gradient(135deg, ${UAO.red}, ${UAO.redDark})`, borderRadius: 16, padding: "24px 28px", marginBottom: 24, color: "#fff", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
         <div>
           <h2 style={{ margin: "0 0 4px", fontSize: 22, fontWeight: 800 }}>Bienvenido, Dr. Pérez</h2>
-          <p style={{ margin: 0, opacity: 0.85, fontSize: 14 }}>Semestre 2024-2 · Programa de Ingeniería de Sistemas · Acreditación ABET</p>
+          <p style={{ margin: 0, opacity: 0.85, fontSize: 14 }}>Semestre 2024-2 · Programa de Ingeniería de Informatica · Acreditación ABET</p>
         </div>
         <div style={{ textAlign: "right", opacity: 0.9 }}>
           <div style={{ fontSize: 13 }}>Última sesión</div>
@@ -938,88 +1363,90 @@ function AsignaturasPage({ addToast }) {
     </div>
   );
 }
+// Ctrl + K + C → comentar
+// Ctrl + K + U → descomentar
 
 // ─── PAGE: DOCENTES ────────────────────────────────────────────────────────────
-function DocentesPage({ addToast }) {
-  const [search, setSearch] = useState("");
-  const [modalOpen, setModalOpen] = useState(false);
-  const filtered = MOCK_DOCENTES.filter(d => d.nombre.toLowerCase().includes(search.toLowerCase()));
-  return (
-    <div>
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 20 }}>
-        <div>
-          <h2 style={{ margin: 0, fontSize: 20, fontWeight: 800, color: UAO.grayDarkest }}>Docentes</h2>
-          <p style={{ margin: "4px 0 0", fontSize: 13, color: UAO.grayText }}>Gestión del cuerpo docente del programa</p>
-        </div>
-        <Btn onClick={() => setModalOpen(true)}>+ Nuevo Docente</Btn>
-      </div>
-      <div style={{ display: "flex", gap: 12, marginBottom: 18 }}>
-        <div style={{ position: "relative", flex: 1 }}>
-        <div
-        style={{
-            position: "absolute",
-            left: 12,
-            top: "50%",
-            transform: "translateY(-50%)",
-            color: UAO.grayText,
-            display: "flex",
-            alignItems: "center",
-        }}
-        >
-        <Search size={16} />
-        </div>      
-    <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Buscar docente..."
-            style={{ width: "100%", padding: "9px 12px 9px 36px", border: `1px solid ${UAO.grayBorder}`, borderRadius: 8, fontSize: 14, fontFamily: "inherit", outline: "none", boxSizing: "border-box" }} />
-        </div>
-      </div>
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 16 }}>
-        {filtered.map(d => (
-          <div key={d.id} style={{ background: "#fff", borderRadius: 14, border: `1px solid ${UAO.grayMed}`, padding: 20, transition: "box-shadow .2s" }}
-            onMouseEnter={e => e.currentTarget.style.boxShadow = "0 4px 20px rgba(0,0,0,0.10)"}
-            onMouseLeave={e => e.currentTarget.style.boxShadow = "none"}
-          >
-            <div style={{ display: "flex", gap: 14, alignItems: "flex-start", marginBottom: 14 }}>
-              <Avatar initials={d.avatar} size={46} />
-              <div style={{ flex: 1, minWidth: 0 }}>
-                <div style={{ fontWeight: 700, fontSize: 14, color: UAO.grayDarkest, lineHeight: 1.3 }}>{d.nombre}</div>
-                <div style={{ fontSize: 12, color: UAO.grayText, marginTop: 2 }}>{d.email}</div>
-                <div style={{ marginTop: 6, display: "flex", gap: 6 }}>
-                  <Badge color={d.rol === "Coordinadora ABET" ? UAO.info : d.rol === "Director" ? UAO.redDark : UAO.grayDark}
-                    bg={d.rol === "Coordinadora ABET" ? UAO.infoLight : d.rol === "Director" ? UAO.redLight : UAO.grayLight}>{d.rol}</Badge>
-                </div>
-              </div>
-            </div>
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8, fontSize: 12, color: UAO.grayText }}>
-              <div><span style={{ fontWeight: 600, color: UAO.grayDark }}>Tipo:</span> {d.tipo}</div>
-              <div><span style={{ fontWeight: 600, color: UAO.grayDark }}>Materias:</span> {d.materias}</div>
-            </div>
-            <div style={{ marginTop: 14, display: "flex", gap: 8 }}>
-              <Btn size="sm" variant="secondary" style={{ flex: 1 }} onClick={() => addToast(`Perfil de ${d.nombre.split(" ")[1]} abierto`, "info")}>Ver Perfil</Btn>
-              <Btn size="sm" variant="ghost" onClick={() => addToast("Correo enviado", "success")}>📧</Btn>
-            </div>
-          </div>
-        ))}
-      </div>
-      <Modal open={modalOpen} onClose={() => setModalOpen(false)} title="Nuevo Docente">
-        <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }}>
-            <Input label="Nombres" placeholder="Carlos Andrés" value="" onChange={() => {}} />
-            <Input label="Apellidos" placeholder="Pérez Rodríguez" value="" onChange={() => {}} />
-          </div>
-          <Input label="Correo institucional" placeholder="nombre@uao.edu.co" value="" onChange={() => {}} type="email" />
-          <Select label="Tipo de vinculación" value="Tiempo Completo" onChange={() => {}}
-            options={[{ value: "Tiempo Completo", label: "Tiempo Completo" }, { value: "Catedrático", label: "Catedrático" }]} />
-          <Select label="Rol en el sistema" value="Docente" onChange={() => {}}
-            options={["Docente","Coordinadora ABET","Director"].map(r => ({ value: r, label: r }))} />
-          <div style={{ display: "flex", gap: 10, justifyContent: "flex-end", paddingTop: 8, borderTop: `1px solid ${UAO.grayLight}` }}>
-            <Btn variant="secondary" onClick={() => setModalOpen(false)}>Cancelar</Btn>
-            <Btn onClick={() => { setModalOpen(false); addToast("Docente agregado exitosamente", "success"); }}>Crear Docente</Btn>
-          </div>
-        </div>
-      </Modal>
-    </div>
-  );
-}
+// function DocentesPage({ addToast }) {
+//   const [search, setSearch] = useState("");
+//   const [modalOpen, setModalOpen] = useState(false);
+//   const filtered = MOCK_DOCENTES.filter(d => d.nombre.toLowerCase().includes(search.toLowerCase()));
+//   return (
+//     <div>
+//       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 20 }}>
+//         <div>
+//           <h2 style={{ margin: 0, fontSize: 20, fontWeight: 800, color: UAO.grayDarkest }}>Docentes</h2>
+//           <p style={{ margin: "4px 0 0", fontSize: 13, color: UAO.grayText }}>Gestión del cuerpo docente del programa</p>
+//         </div>
+//         <Btn onClick={() => setModalOpen(true)}>+ Nuevo Docente</Btn>
+//       </div>
+//       <div style={{ display: "flex", gap: 12, marginBottom: 18 }}>
+//         <div style={{ position: "relative", flex: 1 }}>
+//         <div
+//         style={{
+//             position: "absolute",
+//             left: 12,
+//             top: "50%",
+//             transform: "translateY(-50%)",
+//             color: UAO.grayText,
+//             display: "flex",
+//             alignItems: "center",
+//         }}
+//         >
+//         <Search size={16} />
+//         </div>      
+//     <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Buscar docente..."
+//             style={{ width: "100%", padding: "9px 12px 9px 36px", border: `1px solid ${UAO.grayBorder}`, borderRadius: 8, fontSize: 14, fontFamily: "inherit", outline: "none", boxSizing: "border-box" }} />
+//         </div>
+//       </div>
+//       <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 16 }}>
+//         {filtered.map(d => (
+//           <div key={d.id} style={{ background: "#fff", borderRadius: 14, border: `1px solid ${UAO.grayMed}`, padding: 20, transition: "box-shadow .2s" }}
+//             onMouseEnter={e => e.currentTarget.style.boxShadow = "0 4px 20px rgba(0,0,0,0.10)"}
+//             onMouseLeave={e => e.currentTarget.style.boxShadow = "none"}
+//           >
+//             <div style={{ display: "flex", gap: 14, alignItems: "flex-start", marginBottom: 14 }}>
+//               <Avatar initials={d.avatar} size={46} />
+//               <div style={{ flex: 1, minWidth: 0 }}>
+//                 <div style={{ fontWeight: 700, fontSize: 14, color: UAO.grayDarkest, lineHeight: 1.3 }}>{d.nombre}</div>
+//                 <div style={{ fontSize: 12, color: UAO.grayText, marginTop: 2 }}>{d.email}</div>
+//                 <div style={{ marginTop: 6, display: "flex", gap: 6 }}>
+//                   <Badge color={d.rol === "Coordinadora ABET" ? UAO.info : d.rol === "Director" ? UAO.redDark : UAO.grayDark}
+//                     bg={d.rol === "Coordinadora ABET" ? UAO.infoLight : d.rol === "Director" ? UAO.redLight : UAO.grayLight}>{d.rol}</Badge>
+//                 </div>
+//               </div>
+//             </div>
+//             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8, fontSize: 12, color: UAO.grayText }}>
+//               <div><span style={{ fontWeight: 600, color: UAO.grayDark }}>Tipo:</span> {d.tipo}</div>
+//               <div><span style={{ fontWeight: 600, color: UAO.grayDark }}>Materias:</span> {d.materias}</div>
+//             </div>
+//             <div style={{ marginTop: 14, display: "flex", gap: 8 }}>
+//               <Btn size="sm" variant="secondary" style={{ flex: 1 }} onClick={() => addToast(`Perfil de ${d.nombre.split(" ")[1]} abierto`, "info")}>Ver Perfil</Btn>
+//               <Btn size="sm" variant="ghost" onClick={() => addToast("Correo enviado", "success")}>📧</Btn>
+//             </div>
+//           </div>
+//         ))}
+//       </div>
+//       <Modal open={modalOpen} onClose={() => setModalOpen(false)} title="Nuevo Docente">
+//         <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+//           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }}>
+//             <Input label="Nombres" placeholder="Carlos Andrés" value="" onChange={() => {}} />
+//             <Input label="Apellidos" placeholder="Pérez Rodríguez" value="" onChange={() => {}} />
+//           </div>
+//           <Input label="Correo institucional" placeholder="nombre@uao.edu.co" value="" onChange={() => {}} type="email" />
+//           <Select label="Tipo de vinculación" value="Tiempo Completo" onChange={() => {}}
+//             options={[{ value: "Tiempo Completo", label: "Tiempo Completo" }, { value: "Catedrático", label: "Catedrático" }]} />
+//           <Select label="Rol en el sistema" value="Docente" onChange={() => {}}
+//             options={["Docente","Coordinadora ABET","Director"].map(r => ({ value: r, label: r }))} />
+//           <div style={{ display: "flex", gap: 10, justifyContent: "flex-end", paddingTop: 8, borderTop: `1px solid ${UAO.grayLight}` }}>
+//             <Btn variant="secondary" onClick={() => setModalOpen(false)}>Cancelar</Btn>
+//             <Btn onClick={() => { setModalOpen(false); addToast("Docente agregado exitosamente", "success"); }}>Crear Docente</Btn>
+//           </div>
+//         </div>
+//       </Modal>
+//     </div>
+//   );
+// }
 
 // ─── PAGE: ESTUDIANTES ─────────────────────────────────────────────────────────
 function EstudiantesPage({ addToast }) {
@@ -1629,7 +2056,7 @@ function OutcomesPage({ addToast }) {
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 20 }}>
         <div>
           <h2 style={{ margin: 0, fontSize: 20, fontWeight: 800, color: UAO.grayDarkest }}>Dashboard Student Outcomes ABET</h2>
-          <p style={{ margin: "4px 0 0", fontSize: 13, color: UAO.grayText }}>Cumplimiento de los 7 Student Outcomes del programa · Ingeniería de Sistemas</p>
+          <p style={{ margin: "4px 0 0", fontSize: 13, color: UAO.grayText }}>Cumplimiento de los 7 Student Outcomes del programa · Ingeniería Informatica</p>
         </div>
         <div style={{ display: "flex", gap: 10 }}>
           <select value={semestre} onChange={e => setSemestre(e.target.value)} style={{ padding: "9px 14px", border: `1px solid ${UAO.grayBorder}`, borderRadius: 8, fontSize: 14, fontFamily: "inherit", outline: "none", background: "#fff" }}>
@@ -1832,7 +2259,7 @@ function ConfigPage({ addToast }) {
             <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
               <h4 style={{ margin: "0 0 4px", fontSize: 15, fontWeight: 700 }}>Datos Institucionales</h4>
               <Input label="Nombre de la institución" value="Universidad Autónoma de Occidente" onChange={() => {}} />
-              <Input label="Programa académico" value="Ingeniería de Sistemas" onChange={() => {}} />
+              <Input label="Programa académico" value="Ingeniería Informatica" onChange={() => {}} />
               <Input label="Facultad" value="Facultad de Ingeniería" onChange={() => {}} />
               <Input label="Semestre activo" value="2024-2" onChange={() => {}} />
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }}>
@@ -2108,7 +2535,7 @@ export default function App() {
     </>
   );
 
-  const pages = { dashboard: DashboardPage, asignaturas: AsignaturasPage, docentes: DocentesPage, estudiantes: EstudiantesPage, proyectos: ProyectosPage, rubricas: RubricasPage, excel: ExcelPage, evaluacion: EvaluacionPage, outcomes: OutcomesPage, reportes: ReportesPage, historial: HistorialPage, config: ConfigPage, perfil: PerfilPage, admin: AdminPage };
+  const pages = { dashboard: DashboardPage, asignaturas: AsignaturasPage, estudiantes: EstudiantesPage, proyectos: ProyectosPage, rubricas: RubricasPage, excel: ExcelPage, evaluacion: EvaluacionPage, outcomes: OutcomesPage, reportes: ReportesPage, historial: HistorialPage, config: ConfigPage, perfil: PerfilPage, admin: AdminPage };
   const PageComp = pages[page] || DashboardPage;
 
   return (
